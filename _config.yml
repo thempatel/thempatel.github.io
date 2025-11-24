@@ -1,0 +1,14 @@
+title: Milan Patel
+email: milan@thempatel.com
+url: https://thempatel.com
+remote_theme: riggraz/no-style-please
+
+theme_config:
+  appearance: "dark"
+  date_format: "%Y-%m-%d"
+  show_description: false
+
+permalink: /:year/:month/:day/:title:output_ext
+
+plugins:
+  - jekyll-feed
