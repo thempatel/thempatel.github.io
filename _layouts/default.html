@@ -21,5 +21,39 @@
     {%-if jekyll.environment == "production"-%}
       <img src="https://analytics.thempatel.deno.net{{ page.url }}" alt="" width="1" height="1" style="display:none" />
     {%-endif-%}
+
+    <style>
+      hr:before { content: '* * *'; }
+      hr:after  { content: ''; }
+
+      /* The dark theme inverts the whole page (filter: invert(1)), so these
+         hex values are flipped at render time to the colors in the comments. */
+      a:link    { color: #a75900; } /* soft blue   (#58a6ff) */
+      a:visited { color: #c046af; } /* github green (#3fb950) */
+    </style>
+
+    {%-if page.url == "/"-%}
+    <style>
+      /* Homepage only: center the header and post list. */
+      header { text-align: center; }
+
+      .w ul {
+        width: fit-content;
+        margin: 0 auto;
+        padding: 0;
+        list-style: none;
+      }
+      .w li {
+        display: flex;
+        gap: 12px;
+      }
+      .w li span {
+        width: 10ch;
+        text-align: right;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+    </style>
+    {%-endif-%}
   </body>
 </html>

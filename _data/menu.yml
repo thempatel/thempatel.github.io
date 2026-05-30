@@ -1,15 +1,2 @@
-entries:
-  - title: contact
-    entries:
-      - title: email
-        url: mailto:milan@thempatel.com
-      - title: github
-        url: https://github.com/thempatel
-      - title: linkedin
-        url: https://www.linkedin.com/in/thempatel
-  - title: blog
-    post_list:
-      limit: 5
-      # show_more: true
-      # show_more_text: archive...
-      # show_more_url: archive.html
+# Post list is rendered directly in index.md; menu kept empty for a clean header.
+entries: []
