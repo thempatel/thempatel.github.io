@@ -18,6 +18,8 @@
       {% endfor %}
     {% endif %}
 
-    <img src="https://analytics.thempatel.deno.net{{ page.url }}" alt="" width="1" height="1" style="display:none" />
+    {%-if jekyll.environment == "production"-%}
+      <img src="https://analytics.thempatel.deno.net{{ page.url }}" alt="" width="1" height="1" style="display:none" />
+    {%-endif-%}
   </body>
 </html>
