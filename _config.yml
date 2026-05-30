@@ -1,7 +1,7 @@
 title: Milan Patel
 email: milan@thempatel.com
 url: https://thempatel.com
-remote_theme: riggraz/no-style-please
+remote_theme: riggraz/no-style-please@9011f75
 
 theme_config:
   appearance: "dark"
@@ -12,3 +12,8 @@ permalink: /:year/:month/:day/:title:output_ext
 
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+
+exclude:
+  - analytics

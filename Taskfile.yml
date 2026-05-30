@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  build:
+    desc: Build the Jekyll site into _site/
+    cmds:
+      - bundle exec jekyll build
+
+  dev:
+    desc: Run the Jekyll dev server with live reload
+    cmds:
+      - bundle exec jekyll serve
