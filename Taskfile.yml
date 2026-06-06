@@ -9,4 +9,4 @@ tasks:
   dev:
     desc: Run the Jekyll dev server with live reload
     cmds:
-      - bundle exec jekyll serve
+      - bundle exec jekyll serve --livereload

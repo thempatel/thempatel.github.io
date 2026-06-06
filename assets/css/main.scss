@@ -2,3 +2,91 @@
 ---
 
 @use "no-style-please";
+
+/* ---------------------------------------------------------------------------
+   Pure black/white page, GitHub-Dark code.
+
+   no-style-please ships as a light theme and fakes dark mode by inverting the
+   whole page (filter: invert(1)). We turn the inversion off and own the colors
+   directly: the page chrome stays the original stark black/white, while code
+   blocks get a GitHub-Dark surface and syntax colors. The site is configured
+   appearance: "dark", so this is the only mode in play.
+   ------------------------------------------------------------------------- */
+
+$canvas: #000000;    /* page background        */
+$text: #ffffff;      /* page foreground        */
+$border: #ffffff;    /* table / blockquote     */
+$subtle: #161b22;    /* code / inline-code bg  */
+$code-text: #e6edf3; /* block-code foreground  */
+$inline-code: #ff7b72; /* inline `code` accent */
+
+/* Cancel the theme's page-wide inversion (both the explicit dark attribute
+   and the prefers-color-scheme auto path), and stop inverting images. */
+body[a="dark"],
+body[a="auto"] {
+  filter: none;
+}
+body[a="dark"] img,
+body[a="auto"] img {
+  filter: none;
+}
+
+html,
+body {
+  background: $canvas;
+  color: $text;
+}
+
+a:link,
+a:visited {
+  color: #58a6ff;
+}
+
+table,
+th,
+td,
+blockquote {
+  border-color: $border;
+}
+
+/* Targeted footnote / anchor jumps — GitHub's subtle accent highlight. */
+*:target {
+  background: rgba(56, 139, 253, 0.15);
+}
+
+/* Inline `code` is just accent-colored text — no chip background — so it
+   stands out in prose without a box. Block code (div.highlighter-rouge)
+   keeps the neutral foreground and surface; tokens are colored below. */
+code {
+  color: $inline-code;
+  background: transparent;
+}
+div.highlighter-rouge,
+div.highlighter-rouge code {
+  color: $code-text;
+  background: $subtle;
+  border-radius: 6px;
+}
+
+/* Block code renders smaller than prose so more of a line fits in the narrow
+   column before the theme's pre-wrap kicks in. Inline `code` is unaffected. */
+div.highlighter-rouge code {
+  font-size: 0.8em;
+}
+
+/* --- Syntax tokens (Rouge classes), GitHub Dark ------------------------- */
+.highlight {
+  .c, .ch, .cm, .cp, .cpf, .c1, .cs, .cd { color: #8b949e; font-style: italic; }
+  .k, .kc, .kd, .kn, .kp, .kr, .kt, .kv, .ow { color: #ff7b72; }
+  .s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss { color: #a5d6ff; }
+  .m, .mb, .mf, .mh, .mi, .il, .mo, .mx,
+  .nb, .bp, .no, .na, .nv, .vc, .vg, .vi { color: #79c0ff; }
+  .nf, .fm, .nd { color: #d2a8ff; }
+  .nc, .nn { color: #ffa657; }
+  .nt { color: #7ee787; }
+  .err { color: #f85149; }
+  .gd { color: #ffa198; background: #490202; }
+  .gi { color: #7ee787; background: #033a16; }
+  .ge { font-style: italic; }
+  .gs { font-weight: bold; }
+}

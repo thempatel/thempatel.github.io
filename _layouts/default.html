@@ -22,14 +22,40 @@
       <img src="https://analytics.thempatel.deno.net{{ page.url }}" alt="" width="1" height="1" style="display:none" />
     {%-endif-%}
 
+    <script>
+      // Open external links in a new tab.
+      document.querySelectorAll('a[href^="http"]').forEach(function (a) {
+        if (a.host !== location.host) {
+          a.target = '_blank';
+          a.rel = 'noopener';
+        }
+      });
+    </script>
+
     <style>
-      hr:before { content: '* * *'; }
+      /* Short centered line as a section divider. */
+      hr {
+        border: 0;
+        border-top: 1px solid currentColor;
+        width: 6ch;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      hr:before { content: ''; }
       hr:after  { content: ''; }
 
-      /* The dark theme inverts the whole page (filter: invert(1)), so these
-         hex values are flipped at render time to the colors in the comments. */
-      a:link    { color: #a75900; } /* soft blue   (#58a6ff) */
-      a:visited { color: #c046af; } /* github green (#3fb950) */
+      /* Footnotes: set apart from the essay like print notes —
+         a rule on top, smaller and slightly muted text. */
+      .footnotes {
+        margin-top: 4rem;
+        border-top: 1px solid currentColor;
+        padding-top: 1rem;
+        font-size: 0.85em;
+        opacity: 0.8;
+      }
+
+      /* Mild gap between consecutive footnote markers, e.g. [^2][^3]. */
+      sup + sup { margin-left: 0.25em; }
     </style>
 
     {%-if page.url == "/"-%}
