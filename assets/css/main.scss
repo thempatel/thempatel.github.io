@@ -68,10 +68,29 @@ div.highlighter-rouge code {
   border-radius: 6px;
 }
 
-/* Block code renders smaller than prose so more of a line fits in the narrow
-   column before the theme's pre-wrap kicks in. Inline `code` is unaffected. */
+/* Block code keeps the prose font size and scrolls horizontally instead of
+   wrapping. A mask dissolves everything (background and text alike) at the
+   right edge as a scroll hint. The fade spans only the 1rem right padding,
+   so at full scroll the last character sits just before it and stays
+   readable. */
 div.highlighter-rouge code {
-  font-size: 0.8em;
+  white-space: pre; /* override theme's pre-wrap; overflow-x: auto scrolls */
+  mask-image: linear-gradient(to right, black calc(100% - 1rem), transparent);
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+}
+
+/* Slim dark scrollbar for Safari (Chrome/Firefox use the standard
+   scrollbar-* properties above). */
+div.highlighter-rouge code::-webkit-scrollbar {
+  height: 6px;
+}
+div.highlighter-rouge code::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 3px;
+}
+div.highlighter-rouge code::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* --- Syntax tokens (Rouge classes), GitHub Dark ------------------------- */
