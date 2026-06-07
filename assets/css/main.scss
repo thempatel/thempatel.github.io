@@ -1,58 +1,166 @@
 ---
 ---
 
-@use "no-style-please";
-
 /* ---------------------------------------------------------------------------
-   Pure black/white page, GitHub-Dark code.
-
-   no-style-please ships as a light theme and fakes dark mode by inverting the
-   whole page (filter: invert(1)). We turn the inversion off and own the colors
-   directly: the page chrome stays the original stark black/white, while code
-   blocks get a GitHub-Dark surface and syntax colors. The site is configured
-   appearance: "dark", so this is the only mode in play.
+   Site stylesheet. Derived from the no-style-please theme
+   (github.com/riggraz/no-style-please @ 9011f75, MIT) — vendored and
+   rewritten natively dark. The theme shipped light and faked dark mode by
+   inverting the whole page (filter: invert(1)); here the colors are owned
+   directly: stark black/white page chrome, GitHub-Dark code blocks.
    ------------------------------------------------------------------------- */
 
 $canvas: #000000;    /* page background        */
 $text: #ffffff;      /* page foreground        */
 $border: #ffffff;    /* table / blockquote     */
+$accent: #58a6ff;    /* links                  */
 $subtle: #161b22;    /* code / inline-code bg  */
 $code-text: #e6edf3; /* block-code foreground  */
 $inline-code: #ff7b72; /* inline `code` accent */
 
-/* Cancel the theme's page-wide inversion (both the explicit dark attribute
-   and the prefers-color-scheme auto path), and stop inverting images. */
-body[a="dark"],
-body[a="auto"] {
-  filter: none;
-}
-body[a="dark"] img,
-body[a="auto"] img {
-  filter: none;
-}
+/* --- Page chrome --------------------------------------------------------- */
 
-html,
+/* bg on html too, to block body background propagation
+   see: https://stackoverflow.com/a/61265706 */
+html, body { background: $canvas; }
+
+html { height: 100%; }
+
 body {
-  background: $canvas;
   color: $text;
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0;
+  min-height: 100%;
+  overflow-wrap: break-word;
 }
 
+.w {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+h2, h3, h4, h5, h6 { margin-top: 3rem; }
+
+p { margin: 1rem 0; }
+
+li { margin: 0.4rem 0; }
+
+/* Links: underline only on hover (no hover on mobile is fine). */
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
 a:link,
-a:visited {
-  color: #58a6ff;
-}
+a:visited { color: $accent; }
 
-table,
-th,
-td,
-blockquote {
-  border-color: $border;
+/* Short centered line as a section divider. */
+hr {
+  border: 0;
+  border-top: 1px solid currentColor;
+  width: 6ch;
+  margin: 2rem auto;
 }
 
 /* Targeted footnote / anchor jumps — GitHub's subtle accent highlight. */
-*:target {
-  background: rgba(56, 139, 253, 0.15);
+*:target { background: rgba(56, 139, 253, 0.15); }
+
+table { width: 100%; }
+
+table, th, td {
+  border: thin solid $border;
+  border-collapse: collapse;
+  padding: 0.4rem;
 }
+
+blockquote {
+  font-style: italic;
+  border: thin solid $border;
+  padding: 1rem;
+
+  p { margin: 0; }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* --- Homepage ------------------------------------------------------------ */
+
+/* Only the home layout emits a <header>: centered site title. */
+header { text-align: center; }
+
+/* Post list: title on the left edge, date on the right, mirroring the
+   footer's left/right split. */
+.post-list {
+  width: 100%;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  span { white-space: nowrap; }
+}
+
+/* --- Posts --------------------------------------------------------------- */
+
+/* Meta line: back-home arrow on the left, date on the right. */
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  a {
+    font-size: 1.5em;
+    line-height: 1;
+  }
+}
+
+/* Footnotes: set apart from the essay like print notes —
+   a rule on top, smaller and slightly muted text. */
+.footnotes {
+  margin-top: 4rem;
+  border-top: 1px solid currentColor;
+  padding-top: 1rem;
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+/* Mild gap between consecutive footnote markers, e.g. [^2][^3]. */
+sup + sup { margin-left: 0.25em; }
+
+/* --- Footer -------------------------------------------------------------- */
+
+/* Faint hairline (dimmer than the footnotes rule — the footer is page
+   chrome and should recede), links left, copyright right. */
+.site-footer {
+  margin-top: 4rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+  opacity: 0.8;
+  font-size: 0.85em;
+
+  p {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  span {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .copyright { opacity: 0.7; }
+}
+
+/* --- Code ---------------------------------------------------------------- */
 
 /* Inline `code` is just accent-colored text — no chip background — so it
    stands out in prose without a box. Block code (div.highlighter-rouge)
@@ -74,7 +182,10 @@ div.highlighter-rouge code {
    so at full scroll the last character sits just before it and stays
    readable. */
 div.highlighter-rouge code {
-  white-space: pre; /* override theme's pre-wrap; overflow-x: auto scrolls */
+  display: block;
+  overflow-x: auto;
+  padding: 1rem;
+  white-space: pre;
   mask-image: linear-gradient(to right, black calc(100% - 1rem), transparent);
   scrollbar-width: thin;
   scrollbar-color: #30363d transparent;

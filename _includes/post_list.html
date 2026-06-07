@@ -1,0 +1,10 @@
+{%- if site.posts.size > 0 -%}
+  <ul class="post-list">
+    {%- for post in site.posts limit: include.limit -%}
+        <li>
+          <a href="{{ post.url | relative_url }}">{{ post.title | downcase }}</a>
+          <span>{{- post.date | date: site.theme_config.date_format -}}</span>
+        </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}
