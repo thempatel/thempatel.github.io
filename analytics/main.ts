@@ -4,7 +4,10 @@
 // path = basic page-view analytics. We send no body to minimize egress — the
 // <img> is hidden (display:none), so it never needs to render anything.
 
-Deno.serve((req, info) => {
+// Deno Deploy sets the serving region as an env var; it's constant per instance.
+const region = Deno.env.get("DENO_REGION");
+
+Deno.serve((req) => {
   const url = new URL(req.url);
   const h = req.headers;
   // Log request characteristics — Deno Deploy captures stdout, so these show up
@@ -12,12 +15,10 @@ Deno.serve((req, info) => {
   console.log(JSON.stringify({
     method: req.method,
     path: url.pathname + url.search,
-    ip: h.get("x-forwarded-for") ?? info.remoteAddr.hostname,
     userAgent: h.get("user-agent"),
     referer: h.get("referer"),
     language: h.get("accept-language"),
-    // Deno Deploy attaches the client's region to the request.
-    region: h.get("x-deno-region"),
+    region,
   }));
 
   return new Response(null, {
